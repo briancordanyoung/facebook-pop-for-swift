@@ -6,6 +6,7 @@
 
 @implementation _POPAnimation
 
+
 -(NSString *)description {
   return @"";
 }
@@ -79,9 +80,14 @@
 -(BOOL)repeatForever { return self.ref.repeatForever; }
 -(void)setRepeatForever:(BOOL)repeatForever { self.ref.repeatForever = repeatForever; }
 
+
+
 @end
 
 @implementation _POPPropertyAnimation
+
+@dynamic ref;
+
 
 -(NSString *)description {
   NSString* props = [NSString stringWithFormat:@", fromValue: %@, toValue: %@, property: %@, roundingFactor: %f, clampMode: %lu, additive: %@", self.ref.fromValue, self.ref.toValue, self.ref.property.name, self.ref.roundingFactor, self.ref.clampMode, [NSNumber numberWithBool:self.ref.additive]];
@@ -89,8 +95,6 @@
 }
 
 - (_POPPropertyAnimation*) mutableCopy { return nil; }
-
--(CGFloat)progress { return self.ref.progress; }
 
 @synthesize property = _property;
 -(_POPAnimatableProperty *)property { return _property; }
@@ -105,6 +109,12 @@
 -(id)toValue { return self.ref.toValue; }
 -(void)setToValue:(id)toValue { self.ref.toValue = toValue; }
 
+-(CFTimeInterval)beginTime { return self.ref.beginTime; }
+-(void)setBeginTime:(CFTimeInterval)beginTime { self.ref.beginTime = beginTime; }
+
+-(id)delegate { return self.ref.delegate; }
+-(void)setDelegate:(id <_POPAnimationDelegate>)delegate { self.ref.delegate = delegate; }
+
 -(CGFloat)roundingFactor { return self.ref.roundingFactor; }
 -(void)setRoundingFactor:(CGFloat)roundingFactor { self.ref.roundingFactor = roundingFactor; }
 
@@ -117,6 +127,8 @@
 @end
 
 @implementation _POPDecayAnimation
+
+@dynamic ref;
 
 -(NSString *)description {
   NSString* props = [NSString stringWithFormat:@", velocity: %@, deceleration: %f", self.ref.velocity, self.ref.deceleration];
@@ -154,6 +166,8 @@
 @end
 
 @implementation _POPSpringAnimation
+
+@dynamic ref;
 
 -(NSString *)description {
   NSString* props = [NSString stringWithFormat:@", tension: %f, friction: %f, mass: %f, velocity: %@", self.ref.dynamicsTension, self.ref.dynamicsFriction, self.ref.dynamicsMass, self.ref.velocity];
@@ -201,6 +215,7 @@
 @end
 
 @implementation _POPBasicAnimation
+@dynamic ref;
 
 - (NSString *)description {
   NSString* props = [NSString stringWithFormat:@", duration: %f, timingFunction: %@", self.ref.duration, self.ref.timingFunction];

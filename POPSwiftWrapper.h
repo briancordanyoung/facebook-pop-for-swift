@@ -3,6 +3,43 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 
+
+
+
+
+
+@protocol _POPAnimationDelegate <NSObject>
+@optional
+
+/**
+ @abstract Called on animation start.
+ @param anim The relevant animation.
+ */
+- (void)pop_animationDidStart:(POPAnimation *)anim;
+
+/**
+ @abstract Called when value meets or exceeds to value.
+ @param anim The relevant animation.
+ */
+- (void)pop_animationDidReachToValue:(POPAnimation *)anim;
+
+/**
+ @abstract Called on animation stop.
+ @param anim The relevant animation.
+ @param finished Flag indicating finished state. Flag is true if the animation reached completion before being removed.
+ */
+- (void)pop_animationDidStop:(POPAnimation *)anim finished:(BOOL)finished;
+
+/**
+ @abstract Called each frame animation is applied.
+ @param anim The relevant animation.
+ */
+- (void)pop_animationDidApply:(POPAnimation *)anim;
+
+@end
+
+
+
 /// Abstract animation effect class
 @interface _POPAnimation : NSObject
 
@@ -46,9 +83,14 @@ BOOL repeatForever;
 @property (strong)
 POPAnimation* ref;
 
+
 @end
 
 @class _POPAnimatableProperty;
+
+
+
+
 
 /// Property animation effect class
 @interface _POPPropertyAnimation : _POPAnimation
@@ -66,8 +108,12 @@ id fromValue;
 @property (copy, nonatomic)
 id toValue;
 
-@property (readonly)
-CGFloat progress;
+@property (nonatomic)
+CFTimeInterval beginTime;
+
+
+@property (copy, nonatomic)
+id delegate;
 
 @property (assign, nonatomic)
 CGFloat roundingFactor;
@@ -78,8 +124,9 @@ NSUInteger clampMode;
 @property (assign, nonatomic, getter = isAdditive)
 BOOL additive;
 
-@property (strong)
+@property (atomic)
 POPPropertyAnimation* ref;
+
 
 @end
 
@@ -247,3 +294,9 @@ CGFloat threshold;
 POPAnimatableProperty* ref;
 
 @end
+
+
+
+
+
+
